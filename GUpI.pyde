@@ -91,15 +91,3 @@ def H2x(x):
     return(hex(x)[-2:])
 def rgb(r,g,b):
     return('#'+H2x(r)+H2x(g)+H2x(b))
-    
-def setup():
-    global test
-    global Sub
-    test=GUI(0,0,100,100,"GUI",rgb(255,0,255),5)
-    def sayHI():
-        print("hi")
-    b = Button(20,50,10,10,"say hi",rgb(255,0,0),sayHI(),test, 5)
-def draw():
-    global test
-    run(test)
-    

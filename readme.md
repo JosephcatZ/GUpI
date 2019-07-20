@@ -1,4 +1,4 @@
-#HOW TO INSTALL
+#HOW TO INSTALL<br>
 ##STEP 1:
 download the GUpI.pyde file and put it in with your main files
 

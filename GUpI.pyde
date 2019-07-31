@@ -67,13 +67,14 @@ class Dropdown:
         self.index=0
         Gui.Dropdowns.append(self)
 class Textfield:
-    def __init__(self, X,Y, Width, Height, GUI):
+    def __init__(self, X,Y, Width, Height,Len, GUI):
         self.X = X
         self.Y = Y
         self.W = Width
         self.H = Height
         self.Value='test'
         self.Focus=False
+        self.Len=Len
         self.count=0
         GUI.TextFields.append(self)
 def run(gui):
@@ -129,7 +130,11 @@ def run(gui):
         textAlign(LEFT)
         fill(0)
         textSize(i.H/2)
-        text(i.Value,X+i.X+5,Y+i.Y+3*(i.H/4))
+        if len(i.Value) <= i.Len:
+            val = i.Value
+        else:
+            val = i.Value[len(i.Value)-i.Len:len(i.Value)-i.Len+5]
+        text(val,X+i.X+5,Y+i.Y+3*(i.H/4))
         if i.count==0:
             if keyPressed:
                 if i.Focus:
@@ -143,22 +148,41 @@ def run(gui):
                 i.count = i.count - 1
             else:
                 i.count=0
+                
+    for i in gui.Dropdowns:
+        fill(255)
+        strokeWeight(2)
+        stroke(0)
+        rect(X+i.X,Y+i.Y,i.W,i.H)
+        fill(127)
+        rect(i.W+X+i.X-i.H,Y+i.Y,i.H,i.H)
+        fill(0)
+        textSize(12)
+        text(i.Selected,X+i.X+12,Y+i.Y+12)
+        k=0
+        if mousePressed:
+            
+            if(X+i.X<=mouseX<=X+i.X+i.W and Y+i.Y+(k*i.H)<=mouseY<=Y+i.Y+i.H+(k*i.H)):
+                i.Down=True
+            else:
+                if not(X+i.X<=mouseX<=X+i.X+i.W and Y+i.Y+(k*i.H)<=mouseY<=Y+i.Y+i.H+((len(i.V)+1)*i.H)):
+                    i.Down=False
+        if i.Down:
+            for J in i.V:
+                k=k+1
+                fill(255)
+                strokeWeight(2)
+                stroke(0)
+                rect(X+i.X,Y+i.Y+i.H*k,i.W,i.H)
+                fill(0)
+                textSize(12)
+                text(J,X+i.X+12,i.Y+i.H*k+12)
+                
+                if(X+i.X<=mouseX<=X+i.X+i.W and Y+i.Y+(k*i.H)<=mouseY<=Y+i.Y+i.H+(k*i.H) and mousePressed):
+                    i.Selected=J
             
         
 def H2x(x):
     return(hex(x)[-2:])
 def rgb(r,g,b):
     return('#'+H2x(r)+H2x(g)+H2x(b))
-    
-def setup():
-    global test
-    global Sub
-    test=GUI(0,0,100,100,"GUI",rgb(255,0,255),5)
-    def sayHI():
-        print("hi")
-    #b = Button(20,50,30,20,"say hi",rgb(255,255,0),sayHI,test, 5)
-    t = Textfield(25,50,50,25,test)
-def draw():
-    global test
-    run(test)
-    

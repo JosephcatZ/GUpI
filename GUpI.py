@@ -89,7 +89,7 @@ def run(gui):
     textSize(gui.Xsize/len(gui.Title))
     fill(0)
     textAlign(CENTER)
-    text(gui.Title, gui.Xsize/2, gui.Y+gui.Xsize/len(gui.Title))
+    text(gui.Title, X+gui.Xsize/2, gui.Y+gui.Xsize/len(gui.Title))
     for i in gui.Submenus:
         run(i)
     for i in gui.texts:
